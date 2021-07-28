@@ -30,22 +30,6 @@ public class StudentController {
 	@Autowired
 	private ClassRepository classRepo;
 	
-	@RequestMapping(method = RequestMethod.PUT, path = "/{studentId}/parent")
-	public StudentEntity addParent(@PathVariable Integer studentId, @RequestParam Integer ParentId) {
-		StudentEntity student = studentRepo.findById(studentId).get();
-		ParentEntity parent = parentRepo.findById(ParentId).get();
-		student.setParent(parent);
-		return studentRepo.save(student);
-		}
-	
-	@RequestMapping(method = RequestMethod.PUT, path = "/{studentId}/classroom")
-	public StudentEntity addClassroom(@PathVariable Integer studentId, @RequestParam Integer ClassId) {
-		StudentEntity student = studentRepo.findById(studentId).get();
-		ClassEntity classroom = classRepo.findById(ClassId).get();
-		student.setClassroom(classroom);
-		return studentRepo.save(student);
-		}
-	
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/findByClassId/{classId}")
 	public List<StudentEntity> getAllStudents(@PathVariable Integer classId){

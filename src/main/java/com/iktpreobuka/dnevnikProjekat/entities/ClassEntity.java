@@ -1,5 +1,8 @@
 package com.iktpreobuka.dnevnikProjekat.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,19 @@ public class ClassEntity {
 	@JsonIgnore
 	protected List<StudentEntity> students = new ArrayList<StudentEntity>();
 	
+	@OneToMany(mappedBy = "classNo", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	protected List<TeacherSubjectClass> classNo;
 	
+	
+	public List<TeacherSubjectClass> getClassNo() {
+		return classNo;
+	}
+
+	public void setClassNo(List<TeacherSubjectClass> classNo) {
+		this.classNo = classNo;
+	}
+
 	public List<StudentEntity> getStudents() {
 		return students;
 	}
@@ -39,9 +54,11 @@ public class ClassEntity {
 		this.students = students;
 	}
 
+	
+
 	public ClassEntity() {
 		super();
-	}
+		}
 
 	public Integer getClassId() {
 		return classId;
