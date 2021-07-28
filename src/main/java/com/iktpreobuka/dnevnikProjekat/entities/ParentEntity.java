@@ -36,6 +36,16 @@ public class ParentEntity extends UserEntity{
 	public ParentEntity() {
 		super();
 		}
+	
+	
+	public ParentEntity(String userName, String password, RoleEntity role, String firstName, String lastName, String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		}
+
+
 
 
 
