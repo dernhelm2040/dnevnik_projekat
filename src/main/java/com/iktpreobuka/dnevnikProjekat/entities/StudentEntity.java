@@ -1,5 +1,7 @@
 package com.iktpreobuka.dnevnikProjekat.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +10,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -34,7 +38,18 @@ public class StudentEntity extends UserEntity{
 	@JoinColumn(name = "classroom")
 	protected ClassEntity classroom;
 	
+	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	protected List<TeacherSubjectClassStudent> studentsClasses;
 	
+
+	public List<TeacherSubjectClassStudent> getStudentsClasses() {
+		return studentsClasses;
+	}
+
+	public void setStudentsClasses(List<TeacherSubjectClassStudent> studentsClasses) {
+		this.studentsClasses = studentsClasses;
+	}
 
 	public StudentEntity(String firstName, String lastName) {
 		super();

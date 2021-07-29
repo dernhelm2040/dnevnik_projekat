@@ -39,15 +39,17 @@ public class ClassEntity {
 	
 	@OneToMany(mappedBy = "classNo", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	protected List<TeacherSubjectClass> classNo;
+	protected List<TeacherSubjectClass> classesTaught;
 	
 	
-	public List<TeacherSubjectClass> getClassNo() {
-		return classNo;
+	
+
+	public List<TeacherSubjectClass> getClassesTaught() {
+		return classesTaught;
 	}
 
-	public void setClassNo(List<TeacherSubjectClass> classNo) {
-		this.classNo = classNo;
+	public void setClassesTaught(List<TeacherSubjectClass> classesTaught) {
+		this.classesTaught = classesTaught;
 	}
 
 	public List<StudentEntity> getStudents() {

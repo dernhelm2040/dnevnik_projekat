@@ -29,7 +29,7 @@ public class SubjectEntity {
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	protected List<TeacherSubject> subjects = new ArrayList<>();
-
+	
 	
 
 	public List<TeacherSubject> getSubjects() {
@@ -40,10 +40,11 @@ public class SubjectEntity {
 		this.subjects = subjects;
 	}
 
+	
+
 	public SubjectEntity() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
+		}
 
 	public Integer getSubjectId() {
 		return SubjectId;

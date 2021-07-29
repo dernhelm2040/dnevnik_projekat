@@ -13,8 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
+@JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
+@JsonSerialize
 public class TeacherSubjectClass {
 	
 	@Id
@@ -28,6 +32,10 @@ public class TeacherSubjectClass {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "classNo")
 	protected ClassEntity classNo;
+	
+	@OneToMany(mappedBy = "teacherSubjectClass", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	protected List<TeacherSubjectClassStudent> studentsInClass;
 
 	public TeacherSubjectClass() {
 		super();
@@ -58,7 +66,13 @@ public class TeacherSubjectClass {
 	}
 	
 	
-	
+	public List<TeacherSubjectClassStudent> getStudentsInClass() {
+		return studentsInClass;
+	}
+
+	public void setStudentsInClass(List<TeacherSubjectClassStudent> studentsInClass) {
+		this.studentsInClass = studentsInClass;
+	}
 	
 	
 	

@@ -31,15 +31,46 @@ public class StudentController {
 	private ClassRepository classRepo;
 	
 	
-	@RequestMapping(method = RequestMethod.GET, path = "/findByClassId/{classId}")
-	public List<StudentEntity> getAllStudents(@PathVariable Integer classId){
-		List<StudentEntity> result = new ArrayList<StudentEntity>();
-		if(classRepo.existsById(classId)) {
-			result.add(studentRepo.findById(classId).get());
-			return result;
-		}
-			return null;
-	}
 	
-
-}
+	// Dodaj novog ucenika - testirano, radi 
+		@RequestMapping(method = RequestMethod.POST, path = "/addStudent")
+		public StudentEntity addParent(@RequestParam String userName, @RequestParam String password,
+				@RequestParam String firstName, @RequestParam String lastName) {
+			StudentEntity student = new StudentEntity();
+			student.setUserName(userName);
+			student.setPassword(password);
+			student.setFirstName(firstName);
+			student.setLastName(lastName);
+			return studentRepo.save(student);		
+		}
+		
+		// Postavi roditelja za ucenika - testirano, radi
+				@RequestMapping(method = RequestMethod.PUT, path = "addStudentsParent/{id}")
+				public StudentEntity addStudentsParent(@PathVariable Integer id, @RequestParam Integer parentId) {
+					StudentEntity student = studentRepo.findById(id).get();
+					ParentEntity parent = parentRepo.findById(parentId).get();
+					student.setParent(parent);
+					return studentRepo.save(student);
+				}
+				
+		
+		
+		// Postavi odeljenje za ucenika - testirano, radi
+		@RequestMapping(method = RequestMethod.PUT, path = "/{id}/addStudentsClass/{classId}")
+		public StudentEntity addStudentsClass(@PathVariable Integer id, @PathVariable Integer classId) {
+			StudentEntity student = studentRepo.findById(id).get();
+			ClassEntity classroom = classRepo.findById(classId).get();
+			student.setClassroom(classroom);
+			return studentRepo.save(student);
+		}
+		
+		
+		// Prikazi sve ucenike - testirano, radi
+		@RequestMapping(method = RequestMethod.GET, path = "/allStudents")
+		public Iterable<StudentEntity> allStudents() {
+			return (List<StudentEntity>) studentRepo.findAll();
+		}
+		
+		
+		
+	}

@@ -28,6 +28,9 @@ public class TeacherEntity extends UserEntity{
 	@JsonIgnore
 	protected List<TeacherSubject> teacherSubject = new ArrayList<>();
 
+	
+	
+	
 	public List<TeacherSubject> getTeacherSubject() {
 		return teacherSubject;
 	}
