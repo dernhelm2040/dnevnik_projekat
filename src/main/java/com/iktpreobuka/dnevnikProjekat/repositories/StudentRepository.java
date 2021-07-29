@@ -1,7 +1,5 @@
 package com.iktpreobuka.dnevnikProjekat.repositories;
 
-
-
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;

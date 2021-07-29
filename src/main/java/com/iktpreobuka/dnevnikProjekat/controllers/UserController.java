@@ -14,12 +14,14 @@ import com.iktpreobuka.dnevnikProjekat.entities.ClassEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.ParentEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.RoleEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
+import com.iktpreobuka.dnevnikProjekat.entities.SubjectEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.TeacherEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.UserEntity;
 import com.iktpreobuka.dnevnikProjekat.repositories.ClassRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.ParentRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.RoleRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.StudentRepository;
+import com.iktpreobuka.dnevnikProjekat.repositories.SubjectRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TeacherRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.UserRepository;
 
@@ -47,8 +49,11 @@ public class UserController {
 	@Autowired
 	private TeacherRepository teacherRepo;
 	
+	@Autowired
+	private SubjectRepository subjectRepo;
 	
 	
+	// Dodaj novog roditelja - testirano, radi 
 	@RequestMapping(method = RequestMethod.POST, path = "/addParent")
 	public ParentEntity addParent(@RequestParam String userName, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName,
@@ -62,7 +67,7 @@ public class UserController {
 		return parentRepo.save(parent);		
 	}
 	
-	
+	// Dodaj novog ucenika - testirano, radi 
 	@RequestMapping(method = RequestMethod.POST, path = "/addStudent")
 	public StudentEntity addParent(@RequestParam String userName, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName) {
@@ -74,6 +79,7 @@ public class UserController {
 		return studentRepo.save(student);		
 	}
 	
+	// Dodaj novog nastavnika - testirano, radi 
 	@RequestMapping(method = RequestMethod.POST, path = "/addTeacher")
 	public TeacherEntity addTeacher(@RequestParam String userName, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName) {
@@ -85,6 +91,16 @@ public class UserController {
 		return teacherRepo.save(teacher);		
 	}
 	
+	// Dodaj novi predmet - testirano, radi
+	@RequestMapping(method = RequestMethod.POST, path = "/addSubject")
+	public SubjectEntity addSubject(@RequestParam String subjectName, @RequestParam Integer hoursPerWeek) {
+		SubjectEntity subject = new SubjectEntity();
+		subject.setSubjectName(subjectName);
+		subject.setHoursPerWeek(hoursPerWeek);
+		return subjectRepo.save(subject);		
+	}
+	
+	// Postavi rolu za korisnika - testirano, radi
 	@RequestMapping(method = RequestMethod.PUT, path = "setRole/{id}")
 	public UserEntity setRole(@PathVariable Integer id, @RequestParam Integer roleId) {
 		UserEntity user = userRepo.findById(id).get();
@@ -94,6 +110,7 @@ public class UserController {
 		
 	}
 	
+	// Postavi roditelja za ucenika - testirano, radi
 	@RequestMapping(method = RequestMethod.PUT, path = "addStudentsParent/{id}")
 	public StudentEntity addStudentsParent(@PathVariable Integer id, @RequestParam Integer parentId) {
 		StudentEntity student = studentRepo.findById(id).get();
@@ -101,23 +118,43 @@ public class UserController {
 		student.setParent(parent);
 		return studentRepo.save(student);
 	}
-	//ne
-	@RequestMapping(method = RequestMethod.PUT, path = "addStudentsClass/{id}")
-	public StudentEntity addStudentsClass(@PathVariable Integer id, @RequestParam Integer classId) {
+	
+	
+	// Postavi odeljenje za ucenika - testirano, radi
+	@RequestMapping(method = RequestMethod.PUT, path = "/{id}/addStudentsClass/{classId}")
+	public StudentEntity addStudentsClass(@PathVariable Integer id, @PathVariable Integer classId) {
 		StudentEntity student = studentRepo.findById(id).get();
 		ClassEntity classroom = classRepo.findById(classId).get();
 		student.setClassroom(classroom);
 		return studentRepo.save(student);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path = "/findByParent/{parentId}")
-	public List<StudentEntity> findStudentsByParent(@PathVariable Integer parentId){
+	// Nadji ucenike po ID roditelja - testirano, radi
+	@RequestMapping(method = RequestMethod.GET, path = "/{parentId}/findByParent")
+	public List<StudentEntity> findByParent(@PathVariable Integer parentId){
 		return studentRepo.findByParentId(parentId);
 	}
 	
+	// Prikazi sve ucenike - testirano, radi
 	@RequestMapping(method = RequestMethod.GET, path = "/allStudents")
-	public List<StudentEntity> getAllStudents() {
+	public Iterable<StudentEntity> allStudents() {
 		return (List<StudentEntity>) studentRepo.findAll();
 	}
-
+	
+	// Prikazi sve nastavnike - testirano, radi
+	@RequestMapping(method = RequestMethod.GET, path = "/allTeachers")
+	public Iterable<TeacherEntity> allTeachers() {
+		return (List<TeacherEntity>) teacherRepo.findAll();
+	}
+	
+	// Prikazi sve roditelje - testirano, radi
+	@RequestMapping(method = RequestMethod.GET, path = "/allParents")
+	public Iterable<ParentEntity> allParents() {
+		return (List<ParentEntity>) parentRepo.findAll();
+	}
+	
+	
+	
+	
+	
 }

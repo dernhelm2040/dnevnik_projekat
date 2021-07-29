@@ -9,11 +9,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
+@JsonSerialize
 public class StudentEntity extends UserEntity{
 	
 	@Column(nullable = false)
@@ -29,6 +33,14 @@ public class StudentEntity extends UserEntity{
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "classroom")
 	protected ClassEntity classroom;
+	
+	
+
+	public StudentEntity(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		}
 
 	public ParentEntity getParent() {
 		return parent;

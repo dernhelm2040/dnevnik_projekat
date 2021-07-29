@@ -14,16 +14,14 @@ public class GradeEntity {
 	protected Integer id;
 	
 	
-	@Column
+	@Column (nullable = false)
 	protected Integer grade;
-	
-	@Column
-	protected eGradeTerm gradeTermFinal;
 	
 	@Column
 	protected GradeMonth gradeMonth;
 
 	
+
 
 	public GradeEntity() {
 		super();
@@ -35,14 +33,6 @@ public class GradeEntity {
 
 	public void setGrade(Integer grade) {
 		this.grade = grade;
-	}
-
-	public eGradeTerm getGradeTermFinal() {
-		return gradeTermFinal;
-	}
-
-	public void setGradeTermFinal(eGradeTerm gradeTermFinal) {
-		this.gradeTermFinal = gradeTermFinal;
 	}
 
 	public GradeMonth getGradeMonth() {

@@ -1,7 +1,10 @@
 package com.iktpreobuka.dnevnikProjekat.entities;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
+@JsonSerialize
 public class ClassEntity {
 	
 	@Id
@@ -53,8 +57,17 @@ public class ClassEntity {
 	public void setStudents(List<StudentEntity> students) {
 		this.students = students;
 	}
-
 	
+	
+	
+
+	public ClassEntity(Integer classId, String className, List<StudentEntity> students,
+			List<TeacherSubjectClass> classNo) {
+		super();
+		this.classId = classId;
+		this.className = className;
+		
+	}
 
 	public ClassEntity() {
 		super();
