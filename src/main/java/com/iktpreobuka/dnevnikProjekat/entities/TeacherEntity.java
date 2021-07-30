@@ -12,18 +12,21 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.iktpreobuka.dnevnikProjekat.security.Views;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class TeacherEntity extends UserEntity{
 	
-
+	@JsonView(Views.Teacher.class)
 	protected String firstName;
 	
-	
+	@JsonView(Views.Teacher.class)
 	protected String lastName;
 	
+	@JsonView(Views.Teacher.class)
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	protected List<TeacherSubject> teacherSubject = new ArrayList<>();

@@ -14,21 +14,26 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.iktpreobuka.dnevnikProjekat.security.Views;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
 public class ParentEntity extends UserEntity{
-	
+	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
 	private String firstName;
 	
+	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
 	private String lastName;
 	
+	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
 	private String email;
 	
+	@JsonView(Views.Parent.class)
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<StudentEntity> children = new ArrayList<StudentEntity>();

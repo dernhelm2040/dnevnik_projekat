@@ -3,8 +3,10 @@ package com.iktpreobuka.dnevnikProjekat.entities;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.iktpreobuka.dnevnikProjekat.security.Views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +32,16 @@ public class ClassEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer classId;
 	
+	@JsonView(Views.Student.class)
 	@Column
 	protected String className;
 	
+	@JsonView(Views.Student.class)
 	@OneToMany(mappedBy = "classroom", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	protected List<StudentEntity> students = new ArrayList<StudentEntity>();
 	
+	@JsonView(Views.Student.class)
 	@OneToMany(mappedBy = "classNo", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	protected List<TeacherSubjectClass> classesTaught;

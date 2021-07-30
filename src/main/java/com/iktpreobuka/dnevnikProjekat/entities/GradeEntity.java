@@ -22,7 +22,6 @@ public class GradeEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;		
 	
-
 	protected Integer grade;
 	
 	protected GradeMonth month;

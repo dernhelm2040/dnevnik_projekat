@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iktpreobuka.dnevnikProjekat.entities.AdminEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.ClassEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.ParentEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.RoleEntity;
@@ -17,6 +18,7 @@ import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.SubjectEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.TeacherEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.UserEntity;
+import com.iktpreobuka.dnevnikProjekat.repositories.AdminRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.ClassRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.ParentRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.RoleRepository;
@@ -38,22 +40,21 @@ public class UserController {
 	private RoleRepository roleRepo;
 	
 	@Autowired
-	private ParentRepository parentRepo;
-	
-	@Autowired
-	private StudentRepository studentRepo;
-	
-	@Autowired
-	private ClassRepository classRepo;
-	
-	@Autowired
-	private TeacherRepository teacherRepo;
-	
-	@Autowired
-	private SubjectRepository subjectRepo;
+	private AdminRepository adminRepo;
 	
 	
-	// TO DO napravi nalog za admina
+	
+	
+	// Napravi nalog za admina - testirano, radi
+	@RequestMapping(method = RequestMethod.POST, path = "/createAdmin")
+	public AdminEntity createAdmin(@RequestParam String userName, @RequestParam String password,
+			@RequestParam String email) {
+		AdminEntity admin = new AdminEntity();
+		admin.setUserName(userName);
+		admin.setPassword(password);
+		admin.setEmail(email);
+		return adminRepo.save(admin);		
+	}
 	
 	
 	
