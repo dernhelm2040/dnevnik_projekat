@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,6 +24,8 @@ public class GradeEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;		
 	
+	@Min(value = 1, message = "Grade must be 1 or higher.")
+	@Max(value = 5, message = "Grade must be 5 or lower.")
 	protected Integer grade;
 	
 	protected GradeMonth month;

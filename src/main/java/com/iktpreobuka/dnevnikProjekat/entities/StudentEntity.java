@@ -11,6 +11,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,12 +27,17 @@ import com.iktpreobuka.dnevnikProjekat.security.Views;
 @JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
 @JsonSerialize
 public class StudentEntity extends UserEntity{
+	
 	@JsonView(Views.Student.class)
 	@Column(nullable = false)
+	@NotBlank(message = "First name must not be blank or null")
+	@Size(min = 2, max = 15, message = "First name length must be between {min} and {max} characters." )
 	protected String firstName;
 	
 	@JsonView(Views.Student.class)
 	@Column(nullable = false)
+	@NotBlank(message = "Last name must not be blank or null")
+	@Size(min = 2, max = 15, message = "Last name length must be between {min} and {max} characters." )
 	protected String lastName;
 	
 	@JsonView(Views.Student.class)

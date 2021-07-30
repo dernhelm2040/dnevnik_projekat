@@ -6,6 +6,8 @@ package com.iktpreobuka.dnevnikProjekat.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +47,7 @@ public class ClassController {
 	
 	// Dodaj odeljenje - testirano, radi
 	@RequestMapping(method = RequestMethod.POST)
-	public ClassEntity createClass(@RequestParam String className) {
+	public ClassEntity createClass(@Valid @RequestParam String className) {
 		ClassEntity classroom = new ClassEntity();
 		classroom.setClassName(className);
 		return classRepo.save(classroom);

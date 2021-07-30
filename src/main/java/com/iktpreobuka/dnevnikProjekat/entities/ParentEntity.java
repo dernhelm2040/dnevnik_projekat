@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,16 +24,23 @@ import com.iktpreobuka.dnevnikProjekat.security.Views;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties("{hibernateLazyInitializer, handler}")
 public class ParentEntity extends UserEntity{
+	
 	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
+	@NotBlank(message = "First name must not be blank or null")
+	@Size(min = 2, max = 15, message = "First name length must be between {min} and {max} characters." )
 	private String firstName;
 	
 	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
+	@NotBlank(message = "Last name must not be blank or null")
+	@Size(min = 2, max = 15, message = "Last name length must be between {min} and {max} characters." )
 	private String lastName;
 	
 	@JsonView(Views.Parent.class)
 	@Column(nullable = false)
+	@NotBlank(message = "Email must not be blank or null")
+	@Email(message = "Email is not valid.")
 	private String email;
 	
 	@JsonView(Views.Parent.class)

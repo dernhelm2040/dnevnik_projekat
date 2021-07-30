@@ -2,6 +2,8 @@ package com.iktpreobuka.dnevnikProjekat.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +48,7 @@ public class TeacherController {
 	// Dodaj novog nastavnika - testirano, radi 
 		@JsonView(Views.Admin.class)
 		@RequestMapping(method = RequestMethod.POST, path = "/addTeacher")
-		public TeacherEntity addTeacher(@RequestParam String userName, @RequestParam String password,
+		public TeacherEntity addTeacher( @RequestParam String userName, @RequestParam String password,
 				@RequestParam String firstName, @RequestParam String lastName) {
 			TeacherEntity teacher = new TeacherEntity();
 			teacher.setUserName(userName);

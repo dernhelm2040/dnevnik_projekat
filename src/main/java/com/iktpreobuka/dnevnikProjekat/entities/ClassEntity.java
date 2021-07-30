@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,6 +35,8 @@ public class ClassEntity {
 	protected Integer classId;
 	
 	@JsonView(Views.Student.class)
+	@NotBlank(message = "Please enter class name.")
+	@Size(min = 3, max = 6, message = "Class name must be between {min} and {max} characters." )
 	@Column
 	protected String className;
 	

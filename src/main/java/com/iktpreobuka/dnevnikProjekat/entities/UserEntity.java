@@ -12,6 +12,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,9 +24,13 @@ public class UserEntity {
 		protected Integer id;
 		
 		@Column(name = "username", nullable = false)
+		@NotBlank(message = "Username must not be blank or null")
+		@Size(min = 5, max = 15, message = "Username length must be between {min} and {max} characters." )
 		protected String userName;
 		
 		@Column(name = "password", nullable = false)
+		@NotBlank(message = "Password must not be blank or null")
+		@Size(min = 5, max = 10, message = "Password length must be between {min} and {max} characters." )
 		protected String password;
 		
 		@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
