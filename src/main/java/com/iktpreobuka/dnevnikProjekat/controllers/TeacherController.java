@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.dnevnikProjekat.entities.GradeEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.GradeMonth;
 import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
@@ -20,6 +21,7 @@ import com.iktpreobuka.dnevnikProjekat.repositories.GradeRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.SubjectRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TSRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TeacherRepository;
+import com.iktpreobuka.dnevnikProjekat.security.Views;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
@@ -42,6 +44,7 @@ public class TeacherController {
 	
 	
 	// Dodaj novog nastavnika - testirano, radi 
+		@JsonView(Views.Admin.class)
 		@RequestMapping(method = RequestMethod.POST, path = "/addTeacher")
 		public TeacherEntity addTeacher(@RequestParam String userName, @RequestParam String password,
 				@RequestParam String firstName, @RequestParam String lastName) {
@@ -61,6 +64,7 @@ public class TeacherController {
 		}
 		
 		// Dodeli nastavniku predmet - testirano, radi
+		@JsonView(Views.Admin.class)
 		@RequestMapping(method = RequestMethod.PUT, path = "/{id}/addTeacherSubject")
 		public TeacherSubject addTeacherSubject(@PathVariable Integer id, @RequestParam Integer subjectId) {
 			TeacherSubject ts = new TeacherSubject();
