@@ -21,6 +21,7 @@ import com.iktpreobuka.dnevnikProjekat.repositories.ClassRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.StudentRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TSCRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TSRepository;
+import com.iktpreobuka.dnevnikProjekat.services.StudentDAO;
 
 
 @RestController
@@ -38,6 +39,9 @@ public class ClassController {
 	
 	@Autowired
 	private TSCRepository tscRepo;
+	
+	@Autowired
+	private StudentDAO studentService;
 	
 	// Dodaj odeljenje - testirano, radi
 	@RequestMapping(method = RequestMethod.POST)
@@ -60,9 +64,9 @@ public class ClassController {
 	}
 	
 	// Prikazi sve ucenike u odeljenju po IDu odeljenja - ne radi
-	//@RequestMapping(method = RequestMethod.GET, path = "/{classroom}/findByClassroom")
-	//public List<StudentEntity> findByClassroom(@PathVariable Integer classroom){
-		//return studentRepo.findByClassroom(classroom);
-	//}
+	@RequestMapping(method = RequestMethod.GET, path = "/findByClassroom")
+	public List<StudentEntity> findByClassroom(@RequestParam String clName){
+		return studentService.findByClassroom(clName);
+	}
 	
 }

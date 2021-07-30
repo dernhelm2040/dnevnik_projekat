@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iktpreobuka.dnevnikProjekat.entities.GradeEntity;
+import com.iktpreobuka.dnevnikProjekat.entities.GradeMonth;
 import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.SubjectEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.TeacherEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubject;
+import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubjectClassStudent;
+import com.iktpreobuka.dnevnikProjekat.repositories.GradeRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.SubjectRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TSRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TeacherRepository;
@@ -30,6 +34,11 @@ public class TeacherController {
 	
 	@Autowired
 	private TSRepository tsRepo;
+	
+	@Autowired
+	private GradeRepository gradeRepo;
+	
+	
 	
 	
 	// Dodaj novog nastavnika - testirano, radi 
@@ -60,6 +69,19 @@ public class TeacherController {
 			ts.setTeacher(teacher);
 			ts.setSubject(subject);
 			return tsRepo.save(ts);
+			
+		}
+		
+		// Oceni ucenika
+		@RequestMapping(method = RequestMethod.POST, path = "/addStudentsGrade")
+		public GradeEntity addStudentsGrade(@RequestParam Integer grade, @RequestParam GradeMonth month, 
+				@RequestParam TeacherSubjectClassStudent tscsId) {
+		GradeEntity grade1 = new GradeEntity();
+		grade1.setGrade(grade);
+		grade1.setGradeMonth(month);
+		grade1.setStudentGrade(tscsId);
+		return gradeRepo.save(grade1);
+		
 			
 		}
 		
