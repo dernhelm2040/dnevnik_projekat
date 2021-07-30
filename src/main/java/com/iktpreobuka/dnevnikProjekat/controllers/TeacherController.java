@@ -3,12 +3,18 @@ package com.iktpreobuka.dnevnikProjekat.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
+import com.iktpreobuka.dnevnikProjekat.entities.SubjectEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.TeacherEntity;
+import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubject;
+import com.iktpreobuka.dnevnikProjekat.repositories.SubjectRepository;
+import com.iktpreobuka.dnevnikProjekat.repositories.TSRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.TeacherRepository;
 
 @RestController
@@ -18,6 +24,12 @@ public class TeacherController {
 	
 	@Autowired
 	private TeacherRepository teacherRepo;
+	
+	@Autowired
+	private SubjectRepository subjectRepo;
+	
+	@Autowired
+	private TSRepository tsRepo;
 	
 	
 	// Dodaj novog nastavnika - testirano, radi 
@@ -33,10 +45,22 @@ public class TeacherController {
 		}
 		
 		
-		// Prikazi sve nastavnike - testirano, radi
+		// Prikazi sve nastavnike
 		@RequestMapping(method = RequestMethod.GET, path = "/allTeachers")
 		public Iterable<TeacherEntity> allTeachers() {
 			return (List<TeacherEntity>) teacherRepo.findAll();
 		}
-
-}
+		
+		// Dodeli nastavniku predmet - testirano, radi
+		@RequestMapping(method = RequestMethod.PUT, path = "/{id}/addTeacherSubject")
+		public TeacherSubject addTeacherSubject(@PathVariable Integer id, @RequestParam Integer subjectId) {
+			TeacherSubject ts = new TeacherSubject();
+			TeacherEntity teacher = teacherRepo.findById(id).get();
+			SubjectEntity subject = subjectRepo.findById(subjectId).get();
+			ts.setTeacher(teacher);
+			ts.setSubject(subject);
+			return tsRepo.save(ts);
+			
+		}
+		
+	}

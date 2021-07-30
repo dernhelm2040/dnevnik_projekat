@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iktpreobuka.dnevnikProjekat.entities.ClassEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.ParentEntity;
 import com.iktpreobuka.dnevnikProjekat.entities.StudentEntity;
+import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubject;
+import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubjectClass;
+import com.iktpreobuka.dnevnikProjekat.entities.TeacherSubjectClassStudent;
 import com.iktpreobuka.dnevnikProjekat.repositories.ClassRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.ParentRepository;
 import com.iktpreobuka.dnevnikProjekat.repositories.StudentRepository;
+import com.iktpreobuka.dnevnikProjekat.repositories.TSCRepository;
+import com.iktpreobuka.dnevnikProjekat.repositories.TSCSRepository;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -29,6 +34,12 @@ public class StudentController {
 	
 	@Autowired
 	private ClassRepository classRepo;
+	
+	@Autowired
+	private TSCRepository tscRepo;
+	
+	@Autowired
+	private TSCSRepository tscsRepo;
 	
 	
 	
@@ -71,6 +82,17 @@ public class StudentController {
 			return (List<StudentEntity>) studentRepo.findAll();
 		}
 		
+		// Povezi ucenika sa odeljenjem u kojem predaje nastavnik
+		@RequestMapping(method = RequestMethod.PUT, path = "/{id}/addStudentToTSC")
+		public TeacherSubjectClassStudent addStudentToTSC(@PathVariable Integer id, @RequestParam Integer tscId) {
+			TeacherSubjectClassStudent tscStudent = new TeacherSubjectClassStudent();
+			StudentEntity student = studentRepo.findById(id).get();
+			TeacherSubjectClass tsc = tscRepo.findById(tscId).get();
+			tscStudent.setStudentClass(student);
+			tscStudent.setTeacherSubjectClass(tsc);
+			return tscsRepo.save(tscStudent);
+			
+		}
 		
 		
 	}

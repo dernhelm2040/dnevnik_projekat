@@ -10,6 +10,6 @@ public interface StudentRepository extends CrudRepository<StudentEntity, Integer
 	
 	public List<StudentEntity> findByParentId(Integer parentId);
 	
-	public List<StudentEntity> findByClassroom(Integer classroom);
+
 
 }
